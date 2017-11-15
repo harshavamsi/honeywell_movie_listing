@@ -13,3 +13,10 @@ def detail(request, movie_title):
     movie = get_object_or_404(Movie, movie_title=movie_title)
     context = {'movie' : movie}
     return render(request,'movies/details.html',context)
+
+
+def search(request):
+	if request.method == 'POST':
+		query = request.POST["search"]
+		posts = Post.objects.filter(movie_title__icontains=query)
+		jsonDec = json.decoder.JSONDecoder()
